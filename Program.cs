@@ -31,8 +31,8 @@ namespace Mono_dense2sparse
                 }
                 else
                 {
-                    Genefile.WriteLine(Xval[0]);
-
+                    Genefile.WriteLine( Xval[0] );
+                    Console.WriteLine("got  gene "+  Xval[0]);
                     for (int a = 1; a < Xval.Length; a++)
                     {
                         if ( Int32.Parse(Xval[a]) != 0 ){
@@ -42,7 +42,9 @@ namespace Mono_dense2sparse
                 }
                 i ++;
             }
-            Console.WriteLine("Hello World! sould have produced the files in data/Sparse");
+            Console.WriteLine("Your dense table "+PATH+" has been split into a prefix " + OPATH + " +Genes.txt, + Matrix.txt and +Cells.txt" );
+            Genefile.Close();
+            Mfile.Close();
         }
     }
 }
