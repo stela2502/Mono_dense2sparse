@@ -14,6 +14,7 @@ namespace Mono_dense2sparse
             //    Console.WriteLine("usage: \nMono_dense2sparse.exe <denseMatrix> <outputPrefix>");
             //    return;
             //}
+            Console.WriteLine("Mono_dense2sparse converts all dense comma or tab separated files in the input path to triplets txt files");
             Console.WriteLine("Enter input folder path");
             string inputFolderPath = Console.ReadLine();
             string[] files = Directory.GetFiles(inputFolderPath, "*.csv");
