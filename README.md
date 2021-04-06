@@ -21,6 +21,9 @@ And Run with
 ## Windows
 
 On windows I have not much idear of how to do this, but Visual Studio is the tools of choice.
+2021-03-26: I have been able to try this on windows 10 and Visual Studio 2019.
+The code here does not work and I could not make it woth. But the good news is - just create a new poject using the defaul settings and copy the contents of the .cs file into the new created script.
+This did work for me.
 Building with Visual Studio will creadt a Mono_dense2sparse.exe file that can be used.
 
 # Function

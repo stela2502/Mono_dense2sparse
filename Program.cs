@@ -23,6 +23,7 @@ namespace Mono_dense2sparse
                 Console.WriteLine("Processing file " + path);
                 ReadCSV(path);
             }
+            System.Environment.Exit(1);
         }
 
         private static void ReadCSV(string PATH)
@@ -30,34 +31,57 @@ namespace Mono_dense2sparse
             string OPATH = PATH.Substring(0, PATH.LastIndexOf('.'));
             System.IO.StreamReader file = File.OpenText(PATH);
             string line = null;
-            StreamWriter Genefile = File.CreateText(OPATH + "Genes.txt");
-            StreamWriter Mfile = File.CreateText(OPATH + "Matrix.txt");
-            var i = 0;
-            Mfile.WriteLine("rowID" + " " + "colID" + " " + "Value");
+            if (! Directory.Exists(OPATH))
+            {
+                DirectoryInfo di = Directory.CreateDirectory(OPATH);
+                Console.WriteLine("The directory was created successfully at {0}.", Directory.GetCreationTime(OPATH));
+            }
+
+            StreamWriter Genefile = File.CreateText(Path.Combine(OPATH, "features.tsv"));
+            StreamWriter Mfile = File.CreateText(Path.Combine(OPATH, "matrix.mtx"));
+            int i = 0;
+            int nData = 0;
+            int nGene = 0;
+            int nCell = 0;
+            Mfile.WriteLine("%%MatrixMarket matrix coordinate integer general");
+            Mfile.WriteLine("%");
+            Mfile.WriteLine("%MISSING INFO: 'gene count' 'cell count' 'value count'");
             while ((line = file.ReadLine()) != null)
             {
                 string[] Xval = line.Split(new char[] { ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
                 if (i == 0)
                 {
+                    //%%MatrixMarket matrix coordinate integer general
+                    //%
+                    //16938 65662 83159538
+                    //2 240 1
+
                     //public static System.IO.StreamReader Cellfile (OPATH+"Cells.txt" );
-                    File.WriteAllLines(OPATH + "Cells.txt",
-                                       Xval.Skip(1).ToArray());
+
+                    File.WriteAllLines(Path.Combine(OPATH, "barcodes.tsv"),
+                                       Xval.ToArray());
+                    nGene  = Xval.ToArray().Length;
+
                 }
                 else
                 {
-                    Genefile.WriteLine(Xval[0]);
+                    Genefile.WriteLine(Xval[0] + "\t" + Xval[0] + "Gene Expression");
                     //Console.WriteLine("got  gene " + Xval[0]);
                     for (int a = 1; a < Xval.Length; a++)
                     {
                         if (int.Parse(Xval[a]) != 0)
                         {
                             Mfile.WriteLine(i + " " + a + " " + Xval[a]);
+                            nData ++;
                         }
                     }
+                    nCell++;
                 }
                 i++;
             }
-            Console.WriteLine("Your dense table " + PATH + " has been split into a prefix " + OPATH + " +Genes.txt, + Matrix.txt and +Cells.txt");
+            Console.WriteLine("Your dense table " + PATH + " has been split into a prefix " + OPATH + " +features.tsv, + barcodes.tsv and +Cells.txt");
+            Console.WriteLine("replace the 3rd line in the matrix.mtx by: ");
+            Console.WriteLine("%" + nGene + " " + nCell + " " + nData);
             Genefile.Close();
             Mfile.Close();
             file.Close();
