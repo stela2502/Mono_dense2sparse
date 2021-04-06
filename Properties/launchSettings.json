@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Mono_dense2sparse": {
+      "commandName": "Project",
+      "remoteDebugEnabled": false
+    }
+  }
+}

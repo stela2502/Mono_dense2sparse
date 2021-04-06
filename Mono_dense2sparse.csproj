@@ -3,6 +3,11 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp5.0</TargetFramework>
+    <Company>none</Company>
+    <Description>Convert a dense comma separated matrix (csv) file containing single cell reads into the MatrixMarket sparse mtx format used by CellRanger.
+This tool should be very handy when re-analyzing published data.</Description>
+    <Copyright>Stefan  Lang</Copyright>
+    <PackageLicenseExpression>GPL3</PackageLicenseExpression>
   </PropertyGroup>
 
 </Project>

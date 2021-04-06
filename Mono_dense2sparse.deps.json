@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "Mono_dense2sparse/1.0.0": {
+        "runtime": {
+          "Mono_dense2sparse.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Mono_dense2sparse/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
