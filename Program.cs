@@ -63,7 +63,8 @@ namespace Mono_dense2sparse
             Mfile.WriteLine("%%MatrixMarket matrix coordinate integer general");
             Mfile.WriteLine("%");
             
-            Mfile.WriteLine("%" + nGene + " " + nCell + " " + nData);
+            //Mfile.WriteLine("%" + nGene + " " + nCell + " " + nData);
+            Mfile.WriteLine("%" + nCell + " " + nGene + " " + nData);
             nGene = nCell = nData = 0;
             while ((line = file.ReadLine()) != null)
             {
@@ -76,15 +77,17 @@ namespace Mono_dense2sparse
                     //2 240 1
 
                     //public static System.IO.StreamReader Cellfile (OPATH+"Cells.txt" );
-
-                    File.WriteAllLines(Path.Combine(OPATH, "barcodes.tsv"),
-                                       Xval.ToArray());
-                    nGene  = Xval.ToArray().Length;
+                    StreamWriter Cellfile = File.CreateText(Path.Combine(OPATH, "barcodes.tsv"));
+                    nGene  = Xval.ToArray().Length -1;
+                    for (int a = 1; a < (nGene +1); a++ ){
+                        Cellfile.WriteLine( Xval[a] );
+                    }
+                    Cellfile.Close();
 
                 }
                 else
                 {
-                    Genefile.WriteLine(Xval[0] + "\t" + Xval[0] + "Gene Expression");
+                    Genefile.WriteLine(Xval[0] + "\t" + Xval[0] +"\t"+ "Gene Expression");
                     //Console.WriteLine("got  gene " + Xval[0]);
                     for (int a = 1; a < Xval.Length; a++)
                     {
