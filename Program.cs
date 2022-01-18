@@ -23,7 +23,7 @@ namespace Mono_dense2sparse
                 string[] Xval = line.Split(new char[] { ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
                 if (i == 0)
                 {
-                    nGene = Xval.ToArray().Length;
+                    nCell = Xval.ToArray().Length-1;
                 }
                 else
                 {
@@ -34,7 +34,7 @@ namespace Mono_dense2sparse
                             nData++;
                         }
                     }
-                    nCell++;
+                    nGene++;
                 }
                 i++;
             }
@@ -50,6 +50,7 @@ namespace Mono_dense2sparse
             (nGene, nCell, nData) = Program.GetInfo(PATH);
 
             string OPATH = PATH.Substring(0, PATH.LastIndexOf('.'));
+            OPATH = Path.Combine( OPATH, "filtered_feature_bc_matrix" );
             System.IO.StreamReader file = File.OpenText(PATH);
             string line = null;
             if (! Directory.Exists(OPATH))
@@ -64,7 +65,8 @@ namespace Mono_dense2sparse
             Mfile.WriteLine("%");
             
             //Mfile.WriteLine("%" + nGene + " " + nCell + " " + nData);
-            Mfile.WriteLine("%" + nCell + " " + nGene + " " + nData);
+            //Mfile.WriteLine("%" + nCell + " " + nGene + " " + nData);
+            Mfile.WriteLine( nGene + " " + nCell + " " + nData);
             nGene = nCell = nData = 0;
             while ((line = file.ReadLine()) != null)
             {
@@ -78,8 +80,8 @@ namespace Mono_dense2sparse
 
                     //public static System.IO.StreamReader Cellfile (OPATH+"Cells.txt" );
                     StreamWriter Cellfile = File.CreateText(Path.Combine(OPATH, "barcodes.tsv"));
-                    nGene  = Xval.ToArray().Length -1;
-                    for (int a = 1; a < (nGene +1); a++ ){
+                    nCell  = Xval.ToArray().Length -1;
+                    for (int a = 1; a < (nCell +1); a++ ){
                         Cellfile.WriteLine( Xval[a] );
                     }
                     Cellfile.Close();
@@ -97,7 +99,7 @@ namespace Mono_dense2sparse
                             nData ++;
                         }
                     }
-                    nCell++;
+                    nGene++;
                 }
                 i++;
             }
