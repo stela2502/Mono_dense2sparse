@@ -29,7 +29,16 @@ namespace Mono_dense2sparse
                 {
                     for (int a = 1; a < Xval.Length; a++)
                     {
-                        if (int.Parse(Xval[a]) != 0)
+                        int val = 0;
+                        try {
+                            val = int.Parse(Xval[a]);
+                        }
+                        catch (Exception err ) {
+                            // crap - likely a float then...
+                            val = (int) float.Parse(Xval[a]);
+                        }
+
+                        if ( val != 0)
                         {
                             nData++;
                         }
@@ -93,7 +102,16 @@ namespace Mono_dense2sparse
                     //Console.WriteLine("got  gene " + Xval[0]);
                     for (int a = 1; a < Xval.Length; a++)
                     {
-                        if (int.Parse(Xval[a]) != 0)
+                        int val = 0;
+                        try {
+                            val = int.Parse(Xval[a]);
+                        }
+                        catch ( Exception err ) {
+                            // crap - likely a float then...
+                            val = (int) float.Parse(Xval[a]);
+                        }
+
+                        if ( val != 0)
                         {
                             Mfile.WriteLine(i + " " + a + " " + Xval[a]);
                             nData ++;
@@ -123,11 +141,14 @@ namespace Mono_dense2sparse
             Console.WriteLine("Enter input folder path");
             string inputFolderPath = Console.ReadLine();
             string[] files = Directory.GetFiles(inputFolderPath, "*.csv");
+            int i = 0;
             foreach (string path in files)
             {
                 Console.WriteLine("Processing file " + path);
                 ReadCSV(path);
+                i++;
             }
+            Console.WriteLine("Processed "+i+" files fond in " + inputFolderPath);
             System.Environment.Exit(1);
         }
     }
