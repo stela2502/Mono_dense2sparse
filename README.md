@@ -11,12 +11,43 @@ On Ubuntu 18.04 you need the dotnet package and I recommend Microsoft Code to in
 ```sudo apt install dotnet-sdk-3.0```
 ```sudo snap install code```
 
-You then can compile the program using the dotnet tool:
+You then can compile and test the program using the dotnet tool, gzip and md5sum:
 
-```dotnet build```
+```
 
-And Run with 
-```dotnet run <dll>```
+dotnet build -c Release
+dotnet run ## use path data
+gzip data/DenseMatrix/filtered_feature_bc_matrix/*
+md5sum data/DenseMatrix/filtered_feature_bc_matrix/*
+
+```
+
+Or you can use R to compare the data (Seurat package needed):
+
+```
+Rscript data/Rtest.R 
+
+Attaching SeuratObject
+Warning message:
+In matrix(as.numeric(a), ncol = ncol(da)) : NAs introduced by coercion
+[1] "OK"
+```
+
+The results should look like that:
+
+```
+md5sum data/DenseMatrix/filtered_feature_bc_matrix/*
+
+945873a1a60969e5ae69c7939fef9bc9  data/DenseMatrix/filtered_feature_bc_matrix/barcodes.tsv.gz
+9a802b2e2e6304b0abdbe3d6c7d512df  data/DenseMatrix/filtered_feature_bc_matrix/features.tsv.gz
+28dd4f4885e9f57d36d1dc1411e0e8c4  data/DenseMatrix/filtered_feature_bc_matrix/matrix.mtx.gz
+```
+
+
+E.g.:
+```
+dotnet build -c Release
+
 
 ## Windows 10
 
